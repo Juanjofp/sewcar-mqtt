@@ -5,8 +5,8 @@ export type SewMQTT = {
     publish: (deviceId: string, buffer: Buffer) => void;
 };
 export async function createSewMQTT(parser: SewMQTTParser): Promise<SewMQTT> {
-    const subscribeTopic = 'tribeca/+/status';
-    const client = mqtt.connect('mqtt://192.168.2.14:1883', {
+    const subscribeTopic = '+/status';
+    const client = mqtt.connect('mqtt://sew.ovh:30810', {
         clientId: 'sew-mqtt-1'
     });
 
@@ -24,6 +24,6 @@ export async function createSewMQTT(parser: SewMQTTParser): Promise<SewMQTT> {
             client.end(true, cb);
         },
         publish: (deviceId: string, command: Buffer) =>
-            client.publish(`tribeca/${deviceId}/action`, command)
+            client.publish(`${deviceId}/action`, command)
     };
 }
